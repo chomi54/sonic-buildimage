@@ -2,7 +2,7 @@
 SHELL = /bin/bash
 .SHELLFLAGS += -e
 
-LIBYANG_URL = https://sonicstorage.blob.core.windows.net/debian/pool/main/liby/libyang
+LIBYANG_URL = https://snapshot.debian.org/archive/debian/20241014T083448Z/pool/main/liby/libyang2
 
 DSC_FILE = libyang2_$(LIBYANG2_FULLVERSION).dsc
 ORIG_FILE = libyang2_$(LIBYANG2_VERSION).orig.tar.xz

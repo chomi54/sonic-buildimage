@@ -13,6 +13,13 @@ endif
 
 export SNMPD_VERSION SNMPD_VERSION_FULL
 
+ifeq ($(BLDENV),bookworm)
+SNMPD_DSC_URL = https://snapshot.debian.org/archive/debian/20230103T151722Z/pool/main/n/net-snmp/net-snmp_$(SNMPD_VERSION_FULL).dsc
+else
+SNMPD_DSC_URL = https://deb.debian.org/debian/pool/main/n/net-snmp/net-snmp_$(SNMPD_VERSION_FULL).dsc
+endif
+export SNMPD_DSC_URL
+
 LIBSNMP_BASE = libsnmp-base_$(SNMPD_VERSION_FULL)_all.deb
 $(LIBSNMP_BASE)_SRC_PATH = $(SRC_PATH)/snmpd
 $(LIBSNMP_BASE)_DEPENDS += $(LIBNL3_DEV)
@@ -20,7 +27,7 @@ $(LIBSNMP_BASE)_RDEPENDS += $(LIBNL3)
 SONIC_MAKE_DEBS += $(LIBSNMP_BASE)
 
 SNMPTRAPD = snmptrapd_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
-$(SNMPTRAPD)_DEPENDS += $(LIBSNMP) $(SNMPD)
+$(SNMPTRAPD)_DEPENDS += $(LIBSNMP) $(SNMPD) $(LIBSNMPTRAPD)
 $(SNMPTRAPD)_RDEPENDS += $(LIBSNMP) $(SNMPD)
 $(eval $(call add_derived_package,$(LIBSNMP_BASE),$(SNMPTRAPD)))
 
@@ -51,6 +58,17 @@ $(LIBSNMP)_RDEPENDS += $(LIBSNMP_BASE)
 $(eval $(call add_derived_package,$(LIBSNMP_BASE),$(LIBSNMP)))
 
 ifeq ($(BLDENV),bookworm)
+LIBSNMPTRAPD = libnetsnmptrapd40_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
+else ifeq ($(BLDENV),bullseye)
+LIBSNMPTRAPD = libnetsnmptrapd40_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
+else
+LIBSNMPTRAPD = libnetsnmptrapd30_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
+endif
+$(LIBSNMPTRAPD)_DEPENDS += $(LIBSNMP)
+$(LIBSNMPTRAPD)_RDEPENDS += $(LIBSNMP_BASE)
+$(eval $(call add_derived_package,$(LIBSNMP_BASE),$(LIBSNMPTRAPD)))
+
+ifeq ($(BLDENV),bookworm)
 LIBSNMP_DBG = libsnmp40-dbgsym_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
 else ifeq ($(BLDENV),bullseye)
 LIBSNMP_DBG = libsnmp40-dbgsym_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
@@ -62,7 +80,7 @@ $(LIBSNMP_DBG)_RDEPENDS += $(LIBSNMP)
 $(eval $(call add_derived_package,$(LIBSNMP_BASE),$(LIBSNMP_DBG)))
 
 LIBSNMP_DEV = libsnmp-dev_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb
-$(LIBSNMP_DEV)_DEPENDS += $(LIBSNMP)
+$(LIBSNMP_DEV)_DEPENDS += $(LIBSNMP) $(LIBSNMPTRAPD)
 $(eval $(call add_derived_package,$(LIBSNMP_BASE),$(LIBSNMP_DEV)))
 
 LIBSNMP_PERL = libsnmp-perl_$(SNMPD_VERSION_FULL)_$(CONFIGURED_ARCH).deb

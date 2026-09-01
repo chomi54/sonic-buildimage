@@ -4,6 +4,12 @@ OPENSSH_VERSION := 9.2p1
 OPENSSH_VERSION_FULL := $(OPENSSH_VERSION)-2+deb12u5
 
 export OPENSSH_VERSION OPENSSH_VERSION_FULL
+ifeq ($(BLDENV),bookworm)
+OPENSSH_DSC_URL = https://snapshot.debian.org/archive/debian/20250219T030925Z/pool/main/o/openssh/openssh_$(OPENSSH_VERSION_FULL).dsc
+else
+OPENSSH_DSC_URL = https://deb.debian.org/debian/pool/main/o/openssh/openssh_$(OPENSSH_VERSION_FULL).dsc
+endif
+export OPENSSH_DSC_URL
 
 OPENSSH_SERVER = openssh-server_$(OPENSSH_VERSION_FULL)_$(CONFIGURED_ARCH).deb
 $(OPENSSH_SERVER)_SRC_PATH = $(SRC_PATH)/openssh

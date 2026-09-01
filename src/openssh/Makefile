@@ -14,7 +14,7 @@ $(addprefix $(DEST)/, $(MAIN_TARGET)): $(DEST)/% :
 	rm -rf ./openssh-$(OPENSSH_VERSION)
 
 	# Get openssh release, debian files
-	dget https://security.debian.org/pool/updates/main/o/openssh/openssh_$(OPENSSH_VERSION_FULL).dsc
+	dget $(OPENSSH_DSC_URL)
 	pushd ./openssh-$(OPENSSH_VERSION)
 
 	# Create a git repository here for stg to apply patches

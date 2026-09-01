@@ -275,6 +275,6 @@ https://sonicstorage.blob.core.windows.net/public/sai/bcmpai/REL_3.11/3.11/libsa
 https://static.rust-lang.org/rustup/dist/aarch64-unknown-linux-gnu/rustup-init==21b27f4a24c066ff3c4158998d4f794b
 https://static.rust-lang.org/rustup/dist/armv7-unknown-linux-gnueabihf/rustup-init==13b8d6e5edef35414c2e28db31576656
 https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init==eedd8a5a6ebbc921301660acb99646a5
-https://storage.googleapis.com/golang/go1.15.15.linux-amd64.tar.gz==b75227438c6129b5013da053b3aa3f38
-https://storage.googleapis.com/golang/go1.15.15.linux-arm64.tar.gz==6d721146a9195592d92a80cf27d475f9
-https://storage.googleapis.com/golang/go1.15.15.linux-armv6l.tar.gz==23d140bbeedc978b954de1a199a22bdb
+https://dl.google.com/go/go1.15.15.linux-amd64.tar.gz==b75227438c6129b5013da053b3aa3f38
+https://dl.google.com/go/go1.15.15.linux-arm64.tar.gz==6d721146a9195592d92a80cf27d475f9
+https://dl.google.com/go/go1.15.15.linux-armv6l.tar.gz==23d140bbeedc978b954de1a199a22bdb
